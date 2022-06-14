@@ -25,32 +25,36 @@ public class UserJdbcTemplate {
 	private JdbcTemplate jdbcTemplate;
 	
 	public int count() {
-		return jdbcTemplate.queryForObject("SELECT count(*) FROM USER", Integer.class);
+		return jdbcTemplate.queryForObject("SELECT count(*) FROM USER_DETAILS", Integer.class);
 	}
 
 	public int save(User user) {
 		return jdbcTemplate.update(
-				"INSERT INTO `USER` (USER_NAME, PASSWORD, CREATED_TIME, UPDATED_TIME, USER_TYPE, DOB)"
+				"INSERT INTO `USER_DETAILS` (USER_NAME, PASSWORD, CREATED_TIME, UPDATED_TIME, USER_TYPE, DOB)"
 						+ " VALUES(?,?,?,?,?,?)",
 				user.getUserName(), user.getPassword(), user.getCreatedTime(), user.getUpdatedTime(),
 				user.getUserType().toString(), user.getDateofBirth());
 	}
 
 	public int update(User user) {
-		return jdbcTemplate.update("UPDATE USER SET PASSWORD = ? WHERE ID = ?", user.getPassword(), user.getId());
+		return jdbcTemplate.update("UPDATE USER_DETAILS SET PASSWORD = ? WHERE ID = ?", user.getPassword(), user.getId());
 	}
 
 	public int delete(User user) {
-		return jdbcTemplate.update("DELETE USER WHERE ID = ?", user.getId());
+		return jdbcTemplate.update("DELETE USER_DETAILS WHERE ID = ?", user.getId());
+	}
+	
+	public int deleteAll() {
+		return jdbcTemplate.update("DELETE USER_DETAILS");
 	}
 
 	public List<User> findAll() {
-		return jdbcTemplate.query("SELECT * FROM USER", (rs, rowNum) -> mapUserResult(rs));
+		return jdbcTemplate.query("SELECT * FROM USER_DETAILS", (rs, rowNum) -> mapUserResult(rs));
 	}
 
 	public Optional<User> findById(Long id) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE ID = ?", new Object[] { id },
+			return jdbcTemplate.queryForObject("SELECT * FROM USER_DETAILS WHERE ID = ?", new Object[] { id },
 					(rs, rowNum) -> Optional.of(mapUserResult(rs)));
 		} catch (DataAccessException e) {
 			return Optional.empty();
@@ -59,7 +63,7 @@ public class UserJdbcTemplate {
 
 	public Optional<User> findByUserName(String name) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE user_NAME = ?", new Object[] { name },
+			return jdbcTemplate.queryForObject("SELECT * FROM USER_DETAILS WHERE user_NAME = ?", new Object[] { name },
 					(rs, rowNum) -> Optional.of(mapUserResult(rs)));
 		} catch (DataAccessException e) {
 			return Optional.empty();
@@ -68,13 +72,13 @@ public class UserJdbcTemplate {
 
 	public List<User> findByUserNameAndUserType(String name, String userType) {
 	
-		return jdbcTemplate.query("SELECT * FROM USER WHERE USER_NAME = ? AND USER_TYPE = ?",
+		return jdbcTemplate.query("SELECT * FROM USER_DETAILS WHERE USER_NAME = ? AND USER_TYPE = ?",
 				new Object[] { name, userType }, (rs, rowNum) -> mapUserResult(rs));
 	}
 	
 	public List<User> findAll(Sort sort) {
 		Order order = sort.toList().get(0);
-		return jdbcTemplate.query("SELECT * FROM USER ORDER BY "+order.getProperty()+" "+order.getDirection().name(),
+		return jdbcTemplate.query("SELECT * FROM USER_DETAILS ORDER BY "+order.getProperty()+" "+order.getDirection().name(),
 				 (rs, rowNum) -> mapUserResult(rs));
 	}
 	
@@ -82,12 +86,12 @@ public class UserJdbcTemplate {
 		
 		Order order = !page.getSort().isEmpty() ? page.getSort().toList().get(0) : Order.by("ID");
 		
-		List<User> users = jdbcTemplate.query("SELECT * FROM USER ORDER BY "+order.getProperty()+" "+order.getDirection().name()
+		List<User> users = jdbcTemplate.query("SELECT * FROM USER_DETAILS ORDER BY "+order.getProperty()+" "+order.getDirection().name()
 				+ " LIMIT "+page.getPageSize()+" OFFSET "+page.getOffset(),
 				(rs, rowNum) -> mapUserResult(rs));
 		
 		return new PageImpl<User>(users, page, count());
-	}
+	} 
 
 	private User mapUserResult(final ResultSet rs) throws SQLException {
 		User user = new User();

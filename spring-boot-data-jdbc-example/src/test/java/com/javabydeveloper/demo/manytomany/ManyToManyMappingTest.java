@@ -1,6 +1,6 @@
 package com.javabydeveloper.demo.manytomany;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,17 +32,17 @@ public class ManyToManyMappingTest extends BaseTest {
 		branch1.addSubject(subj2);
 
 		Branch createdBranch1 = branchRepository.save(branch1);
-		Assert.assertTrue(createdBranch1 != null);
+		Assertions.assertTrue(createdBranch1 != null);
 
 		Branch branch2 = getBranch2();
 		branch2.addSubject(subj1);
 		branch2.addSubject(subj3);
 
 		Branch createdBranch2 = branchRepository.save(branch2);
-		Assert.assertTrue(createdBranch2 != null);
+		Assertions.assertTrue(createdBranch2 != null);
 
 		branchRepository.delete(branch1);
-		Assert.assertTrue(!branchRepository.existsById(branch1.getBranchId()));
+		Assertions.assertTrue(!branchRepository.existsById(branch1.getBranchId()));
 
 		branchRepository.findAll().forEach(b -> System.err.println(b));
 	}

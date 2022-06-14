@@ -1,11 +1,11 @@
 package com.javabydeveloper.demo;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -18,7 +18,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.TypedSort;
-import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.google.common.collect.Ordering;
@@ -56,7 +55,7 @@ public class PagingAndSortingRepositoryTest extends BaseTest {
 
 		Ordering<User> expectedOrder = Ordering.explicit(userList);
 
-		assertTrue(expectedOrder.isOrdered(sortedUsers));
+		Assertions.assertTrue(expectedOrder.isOrdered(sortedUsers));
 
 	}
 
@@ -74,8 +73,8 @@ public class PagingAndSortingRepositoryTest extends BaseTest {
 		// paged users - each page should have 5 users
 		Page<User> pagedUsers = userRepository.findAll(pageable);
 
-		assertTrue(pagedUsers.getTotalPages() == 3);
-		assertTrue(pagedUsers.getContent().equals(users.subList(0, 5)));
+		Assertions.assertTrue(pagedUsers.getTotalPages() == 3);
+		Assertions.assertTrue(pagedUsers.getContent().equals(users.subList(0, 5)));
 	}
 
 	@Test
@@ -95,10 +94,10 @@ public class PagingAndSortingRepositoryTest extends BaseTest {
 
 		Ordering<User> expectedOrder = Ordering.explicit(usersList);
 
-		assertTrue(expectedOrder.isOrdered(pagedUsers.getContent()));
+		Assertions.assertTrue(expectedOrder.isOrdered(pagedUsers.getContent()));
 
-		assertTrue(pagedUsers.getTotalPages() == 3);
-		assertTrue(pagedUsers.getContent().equals(usersList));
+		Assertions.assertTrue(pagedUsers.getTotalPages() == 3);
+		Assertions.assertTrue(pagedUsers.getContent().equals(usersList));
 		
 	}
 	
@@ -121,7 +120,7 @@ public class PagingAndSortingRepositoryTest extends BaseTest {
 		System.err.println(sortedUsers);
 	}
 	
-	//@Disabled("Enable on MySql")
+	@Disabled("Enable on MySql")
 	@Test
 	@DisplayName("NamedQuery-Test")
 	@Order(5)

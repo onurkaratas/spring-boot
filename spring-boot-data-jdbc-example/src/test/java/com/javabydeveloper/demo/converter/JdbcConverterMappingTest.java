@@ -2,12 +2,11 @@ package com.javabydeveloper.demo.converter;
 
 import java.util.Date;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 
 import com.javabydeveloper.base.BaseTest;
@@ -43,6 +42,6 @@ public class JdbcConverterMappingTest extends BaseTest{
 
 		User createdUser = userTestRepository.save(user);
 		System.err.println(createdUser);
-		Assert.assertTrue(createdUser != null);
+		Assertions.assertTrue(createdUser != null);
 	}
 }

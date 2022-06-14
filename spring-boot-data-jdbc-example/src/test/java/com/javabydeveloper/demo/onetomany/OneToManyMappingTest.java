@@ -3,7 +3,7 @@ package com.javabydeveloper.demo.onetomany;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class OneToManyMappingTest extends BaseTest {
 
 		Branch createdBranch = testRepository.save(branch);
 		System.err.println(createdBranch);
-		Assert.assertTrue(createdBranch != null);
+		Assertions.assertTrue(createdBranch != null);
 	}
 
 	private static Student getStudent1() {

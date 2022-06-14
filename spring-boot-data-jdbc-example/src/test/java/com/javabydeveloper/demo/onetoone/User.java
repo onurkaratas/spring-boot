@@ -5,12 +5,18 @@ import java.util.Date;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
 
 import com.javabydeveloper.util.UserType;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table("USER_DETAILS")
 public class User {
 
 	@Id
@@ -21,7 +27,7 @@ public class User {
 	private Date dateofBirth;
 	private UserType userType;
 
-	@MappedCollection(idColumn = "CREDS_ID")
+	@Column("USER_DETAIL")
 	private Credentials credentials;
 
 }

@@ -6,11 +6,13 @@ import java.util.Set;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
 
 import com.javabydeveloper.util.UserType;
 
 import lombok.Data;
 
+@Table("USER_DETAILS")
 @Data
 public class User {
 
@@ -29,5 +31,4 @@ public class User {
 	private List<Contact> contacts;
 
 	private UserType userType;
-
 }

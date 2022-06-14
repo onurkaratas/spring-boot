@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +39,6 @@ public class PersistingMapTest extends BaseTest{
 
 		User createdUser = userTestRepository.save(user);
 		System.err.println(createdUser);
-		Assert.assertTrue(createdUser != null);
+		Assertions.assertTrue(createdUser != null);
 	}
 }

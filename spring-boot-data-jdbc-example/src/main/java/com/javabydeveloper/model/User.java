@@ -4,12 +4,13 @@ import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Table;
 
 import com.javabydeveloper.util.UserType;
 
 import lombok.Data;
 
-
+@Table("USER_DETAILS")
 @Data // lomok
 public class User {
 

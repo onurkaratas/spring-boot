@@ -1,12 +1,11 @@
 package com.javabydeveloper.demo.template;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -39,9 +38,11 @@ public class JdbcTemplateTest extends BaseTest {
 	@Order(1)
 	void createUserTest() {
 		
+		userRepository.deleteAll();// deleting all records which are loaded on startup
+		
 		int created = userRepository.save(getUser());
 		
-		assertTrue(created == 1);
+		Assertions.assertTrue(created == 1);
 	}
 	
 	@Test
@@ -56,7 +57,7 @@ public class JdbcTemplateTest extends BaseTest {
 			user.setPassword("ABC123abc#");
 			int updated = userRepository.update(user);
 			
-			assertTrue(updated == 1);
+			Assertions.assertTrue(updated == 1);
 		});
 		
 	}
@@ -83,7 +84,7 @@ public class JdbcTemplateTest extends BaseTest {
 
 			Ordering<User> expectedOrder = Ordering.explicit(userList);
 
-			assertTrue(expectedOrder.isOrdered(sortedUsers));
+			Assertions.assertTrue(expectedOrder.isOrdered(sortedUsers));
 
 		}
 
@@ -101,8 +102,8 @@ public class JdbcTemplateTest extends BaseTest {
 			// paged users - each page should have 5 users
 			Page<User> pagedUsers = userRepository.findAll(pageable);
 
-			assertTrue(pagedUsers.getTotalPages() == 3);
-			assertTrue(pagedUsers.getContent().equals(users.subList(0, 5)));
+			Assertions.assertTrue(pagedUsers.getTotalPages() == 3);
+			Assertions.assertTrue(pagedUsers.getContent().equals(users.subList(0, 5)));
 		}
 
 		@Test
@@ -122,10 +123,10 @@ public class JdbcTemplateTest extends BaseTest {
 
 			Ordering<User> expectedOrder = Ordering.explicit(usersList);
 
-			assertTrue(expectedOrder.isOrdered(pagedUsers.getContent()));
+			Assertions.assertTrue(expectedOrder.isOrdered(pagedUsers.getContent()));
 
-			assertTrue(pagedUsers.getTotalPages() == 3);
-			assertTrue(pagedUsers.getContent().equals(usersList));
+			Assertions.assertTrue(pagedUsers.getTotalPages() == 3);
+			Assertions.assertTrue(pagedUsers.getContent().equals(usersList));
 		}
 	
 	@Test
@@ -139,7 +140,7 @@ public class JdbcTemplateTest extends BaseTest {
 		allUsers.forEach(user -> {
 			userRepository.delete(user);
 			
-			assertTrue(userRepository.findById(user.getId()).isEmpty());
+			Assertions.assertTrue(!userRepository.findById(user.getId()).isPresent());
 		});
 	
 	}

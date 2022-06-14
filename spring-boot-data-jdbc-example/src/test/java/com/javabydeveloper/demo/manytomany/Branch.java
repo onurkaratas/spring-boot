@@ -26,5 +26,4 @@ public class Branch {
 	public void addSubject(Subject subject) {
 		subjects.add(new SubjectRef(subject.getSubjectId()));
 	}
-
 }

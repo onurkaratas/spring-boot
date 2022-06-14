@@ -1,11 +1,9 @@
 package com.javabydeveloper.demo;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.Date;
 import java.util.List;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
@@ -36,9 +34,15 @@ public class Basic_Mapping_Test extends BaseTest {
 	@Order(1)
 	void createUserTest() {
 
-		User created = userRepository.save(getUser());
+		userRepository.deleteAll();// clearing all the records from database
+		
+		User created1 = userRepository.save(getUser("Peter"));
+		User created2 = userRepository.save(getUser("Philip"));
+		User created3 = userRepository.save(getUser("Martin"));
 	
-		assertTrue(created != null && created.getId() != null);
+		Assertions.assertTrue(created1 != null && created1.getId() != null);
+		Assertions.assertTrue(created2 != null && created2.getId() != null);
+		Assertions.assertTrue(created3 != null && created3.getId() != null);
 	}
 
 	//@Disabled
@@ -54,7 +58,7 @@ public class Basic_Mapping_Test extends BaseTest {
 			user.setPassword("ABC123abc#");
 			User updated = userRepository.save(user);
 
-			assertTrue(updated.getPassword().equals("ABC123abc#"));
+			Assertions.assertTrue(updated.getPassword().equals("ABC123abc#"));
 		});
 
 		// userRepository.saveAll(allUsers); // batch update
@@ -72,7 +76,7 @@ public class Basic_Mapping_Test extends BaseTest {
 		allUsers.forEach(user -> {
 			userRepository.delete(user);
 
-			assertTrue(userRepository.findById(user.getId()).isEmpty());
+			Assertions.assertTrue(!userRepository.findById(user.getId()).isPresent());
 		});
 
 		// userRepository.deleteAll(allUsers); //batch delete
@@ -88,11 +92,11 @@ public class Basic_Mapping_Test extends BaseTest {
 		List<User> users = userRepository.searchUsersByName("Pet");
 
 		System.out.println(users);
-		users.forEach(u -> Assert.assertTrue(u.getUserName().contains("Pet")));
+		users.forEach(u -> Assertions.assertTrue(u.getUserName().contains("Pet")));
 
 		int users_found = userRepository.countSearchUsersByName("pet");
 		System.out.println(users_found);
-		assertTrue(users_found == 4);
+		Assertions.assertTrue(users_found == 4);
 	}
 	
 	//@Disabled
@@ -101,16 +105,16 @@ public class Basic_Mapping_Test extends BaseTest {
 	void upDateQueryTest() {
 
 		boolean isUpdated = userRepository.updateUserName("PeterZ", 1L);
-		assertTrue(isUpdated);
+		Assertions.assertTrue(isUpdated);
 		
-		assertTrue(userRepository.findById(1L).get().getUserName().equals("PeterZ"));
+		Assertions.assertTrue(userRepository.findById(1L).get().getUserName().equals("PeterZ"));
 	}
 
-	private User getUser() {
+	private User getUser(String userName) {
 
 		User user = new User();
 		user.setUserType(UserType.STUDENT);
-		user.setUserName("PhilipX");
+		user.setUserName(userName);
 		user.setPassword("ABC123abc*");
 		user.setDateofBirth(new Date());
 		user.setCreatedTime(new Date());

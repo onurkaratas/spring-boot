@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.junit.Assert;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +44,7 @@ public class EmbeddedCollectionMappingTest extends BaseTest{
 
 		User createdUser = userTestRepository.save(user);
 		System.err.println(createdUser);
-		Assert.assertTrue(createdUser != null);
+		Assertions.assertTrue(createdUser != null);
 	}
 
 	public Set<ContactAddress> getAddressList() {

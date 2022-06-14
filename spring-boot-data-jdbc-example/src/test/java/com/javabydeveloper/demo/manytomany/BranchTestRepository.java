@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BranchTestRepository extends CrudRepository<Branch, Long>{
-
+	
 }

@@ -7,14 +7,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("USER_CREDENTIALS")
-@Data // lombok
-@AllArgsConstructor @NoArgsConstructor
-public class Credentials {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table("CUSTOMER")
+public class Customer {
 
 	@Id
 	private Long id;
-	private String userName;
-	private String password;
-	
+	private String name;
+	private String membership;
+	private Address address;
+
 }

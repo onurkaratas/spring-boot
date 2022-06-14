@@ -5,12 +5,14 @@ import java.util.Map;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
+import org.springframework.data.relational.core.mapping.Table;
 
 import com.javabydeveloper.util.ContactType;
 import com.javabydeveloper.util.UserType;
 
 import lombok.Data;
 
+@Table("USER_DETAILS")
 @Data
 public class User {
 

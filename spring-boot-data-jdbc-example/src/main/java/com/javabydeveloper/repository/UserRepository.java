@@ -25,7 +25,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	User findByEmail(String email);
 	
-	@Query("SELECT * FROM USER u WHERE u.email = :email")
+	@Query("SELECT * FROM USER_DETAILS u WHERE u.email = :email")
 	User findByEmailAddress(@Param("email") String email);
 	
 	/*
@@ -40,7 +40,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	int countSearchUsersByName(@Param("name") String name);
 	
 	@Modifying
-	@Query("UPDATE USER SET USER_NAME=:name WHERE ID=:id")
+	@Query("UPDATE USER_DETAILS SET USER_NAME=:name WHERE ID=:id")
 	boolean updateUserName(@Param("name") String name, @Param("id") Long id);
 	
 }

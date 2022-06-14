@@ -27,7 +27,7 @@ public class UserNamedParameterJdbcTemplate {
 	private NamedParameterJdbcTemplate jdbcTemplate;
 	
 	public int count() {
-		return jdbcTemplate.queryForObject("SELECT count(*) FROM USER", new MapSqlParameterSource(), Integer.class);
+		return jdbcTemplate.queryForObject("SELECT count(*) FROM USER_DETAILS", new MapSqlParameterSource(), Integer.class);
 	}
 
 	public int save(User user) {
@@ -38,27 +38,31 @@ public class UserNamedParameterJdbcTemplate {
 		mapSqlParameterSource.addValue("userType", user.getUserType().toString());
 		mapSqlParameterSource.addValue("dateofBirth", user.getDateofBirth());
 
-		return jdbcTemplate.update("INSERT INTO `USER` (USER_NAME, PASSWORD, CREATED_TIME, USER_TYPE, DOB)"
+		return jdbcTemplate.update("INSERT INTO `USER_DETAILS` (USER_NAME, PASSWORD, CREATED_TIME, USER_TYPE, DOB)"
 				+ " VALUES(:userName,:password,:createdTime,:userType,:dateofBirth)", mapSqlParameterSource);
 	}
 
 	public int update(User user) {
 
-		return jdbcTemplate.update("UPDATE USER SET PASSWORD = :password WHERE ID = :id",
+		return jdbcTemplate.update("UPDATE USER_DETAILS SET PASSWORD = :password WHERE ID = :id",
 				new BeanPropertySqlParameterSource(user));
 	}
 
 	public int delete(User user) {
-		return jdbcTemplate.update("DELETE USER WHERE ID = :id", new MapSqlParameterSource("id", user.getId()));
+		return jdbcTemplate.update("DELETE USER_DETAILS WHERE ID = :id", new MapSqlParameterSource("id", user.getId()));
+	}
+	
+	public int deleteAll() {
+		return jdbcTemplate.update("DELETE USER_DETAILS", new MapSqlParameterSource());
 	}
 
 	public List<User> findAll() {
-		return jdbcTemplate.query("SELECT * FROM USER", (rs, rowNum) -> mapUserResult(rs));
+		return jdbcTemplate.query("SELECT * FROM USER_DETAILS", (rs, rowNum) -> mapUserResult(rs));
 	}
 
 	public Optional<User> findById(Long id) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE ID = :id", new MapSqlParameterSource("id", id),
+			return jdbcTemplate.queryForObject("SELECT * FROM USER_DETAILS WHERE ID = :id", new MapSqlParameterSource("id", id),
 					(rs, rowNum) -> Optional.of(mapUserResult(rs)));
 		} catch (DataAccessException e) {
 			return Optional.empty();
@@ -67,7 +71,7 @@ public class UserNamedParameterJdbcTemplate {
 
 	public Optional<User> findByUserName(String name) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE USER_NAME = :name",
+			return jdbcTemplate.queryForObject("SELECT * FROM USER_DETAILS WHERE USER_NAME = :name",
 					new MapSqlParameterSource("name", name), (rs, rowNum) -> Optional.of(mapUserResult(rs)));
 		} catch (DataAccessException e) {
 			return Optional.empty();
@@ -84,13 +88,13 @@ public class UserNamedParameterJdbcTemplate {
 	
 	public List<User> findAllSorted(Sort sort) {
 		Order order = sort.toList().get(0);
-		return jdbcTemplate.query("SELECT * FROM USER ORDER BY "+order.getProperty()+" "+order.getDirection().name(),
+		return jdbcTemplate.query("SELECT * FROM USER_DETAILS ORDER BY "+order.getProperty()+" "+order.getDirection().name(),
 				 (rs, rowNum) -> mapUserResult(rs));
 	}
 	
 	public Page<User> findAllPaginated(Pageable page) {
 	
-		List<User> users = jdbcTemplate.query("SELECT * FROM USER LIMIT "+page.getPageSize()+" OFFSET "+page.getOffset(),
+		List<User> users = jdbcTemplate.query("SELECT * FROM USER_DETAILS LIMIT "+page.getPageSize()+" OFFSET "+page.getOffset(),
 				(rs, rowNum) -> mapUserResult(rs));
 		
 		return new PageImpl<User>(users, page, count());
@@ -98,7 +102,7 @@ public class UserNamedParameterJdbcTemplate {
 	
 	public Page<User> findAllPaginatedAndSorted(Pageable page) {
 		Order order = page.getSort().toList().get(0);
-		List<User> users = jdbcTemplate.query("SELECT * FROM USER ORDER BY "+order.getProperty()+" "+order.getDirection().name()
+		List<User> users = jdbcTemplate.query("SELECT * FROM USER_DETAILS ORDER BY "+order.getProperty()+" "+order.getDirection().name()
 				+ " LIMIT "+page.getPageSize()+" OFFSET "+page.getOffset(),
 				(rs, rowNum) -> mapUserResult(rs));
 		

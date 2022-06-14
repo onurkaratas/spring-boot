@@ -5,7 +5,7 @@ DROP procedure IF EXISTS `search_users_proc`$
 CREATE PROCEDURE `search_users_proc` (IN name VARCHAR(50))
 BEGIN
     SELECT *
-    FROM USER
+    FROM USER_DETAILS
     WHERE user_name LIKE CONCAT('%', name , '%');
 END$
 
@@ -20,7 +20,7 @@ CREATE PROCEDURE `count_search_users_proc` (
 BEGIN
   SELECT COUNT(id)
   INTO total
-  FROM USER
+  FROM USER_DETAILS
   WHERE user_name LIKE CONCAT('%', name , '%');
   SELECT total AS users_found;
 END

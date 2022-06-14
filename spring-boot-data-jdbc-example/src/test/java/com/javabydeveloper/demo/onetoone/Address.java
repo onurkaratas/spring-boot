@@ -1,20 +1,22 @@
 package com.javabydeveloper.demo.onetoone;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table("USER_CREDENTIALS")
+@Table("ADDRESS")
 @Data // lombok
 @AllArgsConstructor @NoArgsConstructor
-public class Credentials {
+public class Address {
 
-	@Id
-	private Long id;
-	private String userName;
-	private String password;
-	
+	//@Id
+	//private Long id;
+	private String building;
+	private String street;
+	private String state;
+	private String country;
+	private String zipcode;
+
 }

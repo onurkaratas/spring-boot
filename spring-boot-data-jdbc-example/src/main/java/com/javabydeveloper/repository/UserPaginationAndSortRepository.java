@@ -24,7 +24,7 @@ public interface UserPaginationAndSortRepository extends PagingAndSortingReposit
 	
 	int sampleNamedQuery(Long id);
 	
-	@Query("SELECT USER_NAME FROM USER WHERE ID=:id")
+	@Query("SELECT USER_NAME FROM USER_DETAILS WHERE ID=:id")
 	String getUserNameById(Long id);
 	
 	/* query method using pageable */
