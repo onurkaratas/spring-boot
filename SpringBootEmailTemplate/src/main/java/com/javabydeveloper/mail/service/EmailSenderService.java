@@ -37,7 +37,8 @@ public class EmailSenderService {
         Context context = new Context();
         context.setVariables(mail.getProps());
     
-        String html = templateEngine.process("newsletter-template", context);
+        final String template = mail.getProps().get("type").equals("NEWSLETTER") ? "newsletter-template" : "inlined-css-template";
+        String html = templateEngine.process(template, context);
 
         helper.setTo(mail.getMailTo());
         helper.setText(html, true);

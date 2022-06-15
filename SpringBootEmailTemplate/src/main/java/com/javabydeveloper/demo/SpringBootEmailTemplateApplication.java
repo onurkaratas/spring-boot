@@ -1,7 +1,10 @@
 package com.javabydeveloper.demo;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,21 +34,45 @@ public class SpringBootEmailTemplateApplication implements ApplicationRunner{
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		
-		log.info("START... Sending email");
-
         Mail mail = new Mail();
-        mail.setFrom("yourmailid@email.com");//replace with your desired email
-        mail.setMailTo("tomail@email.com");//replace with your desired email
+        mail.setFrom("from@gmail.com");//replace with your desired email
+        mail.setMailTo("to@gmail.com");//replace with your desired email
+        
+        sendFakeNewsLetter(mail);
+        sendInlinedCssEmail(mail);
+	}
+	
+	private void sendFakeNewsLetter(Mail mail) throws MessagingException, IOException {
+		
+		log.info("START... Sending Fake News Letter");
+		
         mail.setSubject("Email with Spring boot and thymeleaf template!");
 
         Map<String, Object> model = new HashMap<String, Object>();
         model.put("name", "Developer!");
         model.put("location", "United States");
         model.put("sign", "Java Developer");
+        model.put("type", "NEWSLETTER");
         mail.setProps(model);
 
         emailService.sendEmail(mail);
-        log.info("END... Email sent success");
+        log.info("END... Sending Fake News Letter");
+	}
+	
+    private void sendInlinedCssEmail(Mail mail) throws MessagingException, IOException {
 		
+    	log.info("START...Sending Inlined CSS Email");
+
+        mail.setSubject("Email with Inlined CSS Responsive Thymeleaf Template!");
+
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("name", "Peter Milanovich!");
+        model.put("address", "Company Inc, 3 Abbey Road, San Francisco CA 94102");
+        model.put("sign", "JavaByDeveloper");
+        model.put("type", "TRANSACTIONAL");
+        mail.setProps(model);
+
+        emailService.sendEmail(mail);
+        log.info("END... Sending Inlined CSS Email");
 	}
 }
