@@ -17,7 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.javabydeveloper.util.UserType;
 
-@Entity(name = "USER")
+@Entity(name = "USER_DETAILS")
 public class User {
 
 	@Id
