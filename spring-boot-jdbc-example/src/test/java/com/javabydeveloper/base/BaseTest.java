@@ -10,7 +10,7 @@ public class BaseTest {
 	@BeforeAll
 	public static void startH2Server() throws SQLException {
 		// to access H2 console while debug tests
-		Server h2server = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8082");
+		Server h2server = Server.createWebServer("-web", "-webAllowOthers", "-webPort", "8088");
 		h2server.start();
 	}
 }

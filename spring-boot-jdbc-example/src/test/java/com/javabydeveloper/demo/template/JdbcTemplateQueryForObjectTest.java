@@ -1,10 +1,8 @@
 package com.javabydeveloper.demo.template;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 import java.util.Optional;
-import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -13,7 +11,6 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,7 +19,6 @@ import org.springframework.test.context.jdbc.Sql;
 
 import com.javabydeveloper.base.BaseTest;
 import com.javabydeveloper.model.User;
-import com.javabydeveloper.util.UserType;
 
 @SpringBootTest
 @Sql(scripts = "/basic_mapping.sql") // to created DB tables and init sample DB data
@@ -32,7 +28,7 @@ public class JdbcTemplateQueryForObjectTest extends BaseTest {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	@Disabled
+	//@Disabled
 	@Test
 	@DisplayName("users-count-test")
 	@Order(1)
@@ -48,7 +44,7 @@ public class JdbcTemplateQueryForObjectTest extends BaseTest {
 	@Order(2)
 	@DisplayName("find-by-id-test")
 	@ParameterizedTest
-	@ValueSource(longs = {50})
+	@ValueSource(longs = {11})
 	void findByIdTest(Long id) {
 		
 		String sql = "SELECT * FROM USER where ID = ?";
@@ -59,7 +55,7 @@ public class JdbcTemplateQueryForObjectTest extends BaseTest {
 
 	@Disabled("Run on Mysql only")
 	@Order(3)
-	@DisplayName("find-by-id-test")
+	@DisplayName("srong-password-test")
 	@ParameterizedTest
 	@ValueSource(strings = {"PeterM"})
 	void userHasStrongPasswordTest(String name) {

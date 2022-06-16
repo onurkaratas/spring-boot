@@ -1,12 +1,14 @@
 package com.javabydeveloper.demo.template.sp;
 
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -33,7 +35,7 @@ public class JdbcTemplateSPTest extends BaseTest {
 	private UserJdbcTemplate jdbcTemplate;
 
 	// MySql stored procedure test
-	// @Disabled("Enable to run On MySql only")
+	@Disabled("Enable to run On MySql only")
 	@Test
 	@Order(1)
 	@DisplayName("Stored Procedure Test ")
@@ -46,7 +48,7 @@ public class JdbcTemplateSPTest extends BaseTest {
 		assertTrue(users.size() == 4);
 	}
 
-	// @Disabled("Enable to run On MySql only")
+	@Disabled("Enable to run On MySql only")
 	@Test
 	@Order(2)
 	@DisplayName("SimpleJdbcCall - Stored Procedure Test ")
@@ -64,7 +66,7 @@ public class JdbcTemplateSPTest extends BaseTest {
 		assertTrue(total == 12);
 	}
 
-	// @Disabled("Enable to run On MySql only")
+	@Disabled("Enable to run On MySql only")
 	@Test
 	@Order(3)
 	@DisplayName("Stored Procedure Multiple Result Sets Test")

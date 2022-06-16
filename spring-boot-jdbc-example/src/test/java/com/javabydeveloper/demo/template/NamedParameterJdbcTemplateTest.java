@@ -1,6 +1,7 @@
 package com.javabydeveloper.demo.template;
 
-import static org.junit.Assert.assertTrue;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -139,7 +140,7 @@ public class NamedParameterJdbcTemplateTest extends BaseTest {
 		allUsers.forEach(user -> {
 			userRepository.delete(user);
 			
-			assertTrue(userRepository.findById(user.getId()).isEmpty());
+		assertTrue(!userRepository.findById(user.getId()).isPresent());
 		});
 	
 	}

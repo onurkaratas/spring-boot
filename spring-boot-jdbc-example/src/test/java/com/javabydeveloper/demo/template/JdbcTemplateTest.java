@@ -1,6 +1,8 @@
 package com.javabydeveloper.demo.template;
 
-import static org.junit.Assert.assertTrue;
+
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Comparator;
 import java.util.Date;
@@ -8,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
@@ -53,7 +54,7 @@ public class JdbcTemplateTest extends BaseTest {
 		//assertTrue(created == 1);
 	}
 
-	@Disabled
+	//@Disabled
 	@Test
 	@DisplayName("Update-User-Test ")
 	@Order(2)
@@ -71,7 +72,7 @@ public class JdbcTemplateTest extends BaseTest {
 
 	}
 
-	@Disabled
+	//@Disabled
 	// Gets all of user data - Test on small sample data
 	@Test
 	@DisplayName("Sorting-By-UserName-Test")
@@ -96,7 +97,7 @@ public class JdbcTemplateTest extends BaseTest {
 
 	}
 
-	@Disabled
+	//@Disabled
 	@Test
 	@DisplayName("Results-By-Page-And-Size-Test")
 	@Order(4)
@@ -115,7 +116,7 @@ public class JdbcTemplateTest extends BaseTest {
 		assertTrue(pagedUsers.getContent().equals(users.subList(0, 5)));
 	}
 
-	@Disabled
+	//@Disabled
 	@Test
 	@DisplayName("Results-By-Page-Size-And-SortBy-Test")
 	@Order(5)
@@ -139,7 +140,7 @@ public class JdbcTemplateTest extends BaseTest {
 		assertTrue(pagedUsers.getContent().equals(usersList));
 	}
 
-	@Disabled
+	//@Disabled
 	@Test
 	@DisplayName("Delete-User-Test ")
 	@Order(6)
@@ -150,7 +151,7 @@ public class JdbcTemplateTest extends BaseTest {
 
 		allUsers.forEach(user -> {
 			userRepository.delete(user);
-			//assertTrue(userRepository.findById(user.getId()));
+			assertTrue(!userRepository.findById(user.getId()).isPresent());
 		});
 
 	}

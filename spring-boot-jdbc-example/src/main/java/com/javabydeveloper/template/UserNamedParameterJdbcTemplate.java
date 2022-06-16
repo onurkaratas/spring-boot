@@ -38,7 +38,7 @@ public class UserNamedParameterJdbcTemplate {
 		mapSqlParameterSource.addValue("userType", user.getUserType().toString());
 		mapSqlParameterSource.addValue("dateofBirth", user.getDateofBirth());
 
-		return jdbcTemplate.update("INSERT INTO `USER` (USER_NAME, PASSWORD, CREATED_TIME, USER_TYPE, DOB)"
+		return jdbcTemplate.update("INSERT INTO `USER` (USERNAME, PASSWORD, CREATEDTIME, USERTYPE, DATEOFBIRTH)"
 				+ " VALUES(:userName,:password,:createdTime,:userType,:dateofBirth)", mapSqlParameterSource);
 	}
 
@@ -49,7 +49,7 @@ public class UserNamedParameterJdbcTemplate {
 	}
 
 	public int delete(User user) {
-		return jdbcTemplate.update("DELETE USER WHERE ID = :id", new MapSqlParameterSource("id", user.getId()));
+		return jdbcTemplate.update("DELETE FROM USER WHERE ID = :id", new MapSqlParameterSource("id", user.getId()));
 	}
 
 	public List<User> findAll() {
@@ -67,7 +67,7 @@ public class UserNamedParameterJdbcTemplate {
 
 	public Optional<User> findByUserName(String name) {
 		try {
-			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE USER_NAME = :name",
+			return jdbcTemplate.queryForObject("SELECT * FROM USER WHERE USERNAME = :name",
 					new MapSqlParameterSource("name", name), (rs, rowNum) -> Optional.of(mapUserResult(rs)));
 		} catch (DataAccessException e) {
 			return Optional.empty();
@@ -78,7 +78,7 @@ public class UserNamedParameterJdbcTemplate {
 		MapSqlParameterSource mapSqlParameterSource = new MapSqlParameterSource();
 		mapSqlParameterSource.addValue("name", name);
 		mapSqlParameterSource.addValue("type", userType);
-		return jdbcTemplate.query("SELECT * FROM USER WHERE USER_NAME = :name AND USER_TYPE = :type", mapSqlParameterSource,
+		return jdbcTemplate.query("SELECT * FROM USER WHERE USERNAME = :name AND USERTYPE = :type", mapSqlParameterSource,
 				(rs, rowNum) -> mapUserResult(rs));
 	}
 	
@@ -108,12 +108,12 @@ public class UserNamedParameterJdbcTemplate {
 	private User mapUserResult(final ResultSet rs) throws SQLException {
 		User user = new User();
 		user.setId(rs.getLong("ID"));
-		user.setUserName(rs.getString("USER_NAME"));
+		user.setUserName(rs.getString("USERNAME"));
 		user.setPassword(rs.getString("PASSWORD"));
-		user.setCreatedTime(rs.getDate("CREATED_TIME"));
-		user.setUpdatedTime(rs.getDate("UPDATED_TIME"));
-		user.setUserType(UserType.valueOf(rs.getString("USER_TYPE")));
-		user.setDateofBirth(rs.getDate("DOB"));
+		user.setCreatedTime(rs.getDate("CREATEDTIME"));
+		user.setUpdatedTime(rs.getDate("UPDATEDTIME"));
+		user.setUserType(UserType.valueOf(rs.getString("USERTYPE")));
+		user.setDateofBirth(rs.getDate("DATEOFBIRTH"));
 
 		return user;
 	}
