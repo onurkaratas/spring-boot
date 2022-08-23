@@ -34,12 +34,12 @@ public class OneToOneMappingTest extends BaseTest {
 		address.setCountry("United States");
 		address.setZipcode("90011");
 
-		Customer book = new Customer();
-		book.setName("Peter");
-		book.setMembership("FREE");
-		book.setAddress(address);
+		Customer customer = new Customer();
+		customer.setName("Peter");
+		customer.setMembership("FREE");
+		customer.setAddress(address);
 
-		Customer saved = customerOneToOneTestRepository.save(book);
+		Customer saved = customerOneToOneTestRepository.save(customer);
 		System.err.println(saved);
 		Assertions.assertTrue(saved != null);
 		
